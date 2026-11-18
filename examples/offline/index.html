@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IconsLibrary offline example</title>
+  </head>
+  <body>
+    <main>
+      <h1>Home drawings</h1>
+      <img
+        src="iconslibrary/home-01.svg"
+        alt="Home 01"
+        width="96"
+        height="96"
+      />
+      <img
+        src="iconslibrary/home-13.svg"
+        alt="Home 13"
+        width="96"
+        height="96"
+      />
+      <h2>Home Motion</h2>
+      <button id="play" type="button" aria-pressed="false">Play motion</button>
+      <img
+        id="motion"
+        alt="Home motion"
+        src="iconslibrary/home-01.svg"
+        width="96"
+        height="96"
+      />
+    </main>
+    <script>
+      const button = document.querySelector("#play");
+      const artwork = document.querySelector("#motion");
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+      const stop = () => {
+        artwork.src = "iconslibrary/home-01.svg";
+        button.setAttribute("aria-pressed", "false");
+        button.textContent = "Play motion";
+      };
+      const updatePreference = () => {
+        if (reduced.matches) stop();
+        button.disabled = reduced.matches;
+      };
+      updatePreference();
+      reduced.addEventListener("change", updatePreference);
+      button.addEventListener("click", () => {
+        if (button.getAttribute("aria-pressed") === "true") return stop();
+        artwork.src = "iconslibrary/home-motion.svg";
+        button.setAttribute("aria-pressed", "true");
+        button.textContent = "Stop motion";
+      });
+    </script>
+  </body>
+</html>
